@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Message Me" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Message Me">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    
+    <%# Fomantic UI (Semantic UI) & jQuery CDNs %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.3/semantic.min.js"></script>
+
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <div class="ui small inverted menu">
+      <div class="ui container">
+        <%= link_to "Chatroom", root_path, class: "item" %>
+        <a class="item">Messages</a>
+        <div class="right menu">
+          <div class="ui dropdown item">
+            Account <i class="dropdown icon"></i>
+            <div class="menu">
+              <a class="item">Edit Profile</a>
+              <a class="item">Logout</a>
+            </div>
+          </div>
+          <div class="item">
+            <%= link_to "Log in", login_path, class: "ui primary button" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui container">
+      <%= yield %>
+    </div>
+
+    <script>
+      $(document).on('turbo:load', function() {
+        $('.ui.dropdown').dropdown();
+      });
+    </script>
+  </body>
+</html>
